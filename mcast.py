@@ -43,8 +43,11 @@ def run_client(group, port, ttl):
     host = socket.gethostbyname(socket.gethostname())
     sock.setsockopt(socket.SOL_IP, socket.IP_MULTICAST_IF,
                     socket.inet_aton(host))
-    sock.setsockopt(socket.SOL_IP, socket.IP_ADD_MEMBERSHIP,
-                    socket.inet_aton(group) + socket.inet_aton(host))
+    sock.setsockopt(
+        socket.SOL_IP,
+        socket.IP_ADD_MEMBERSHIP,
+        socket.inet_aton(group) + socket.inet_aton(host),
+    )
 
     while True:
         try:
@@ -99,10 +102,8 @@ def main(argv):
         usage()
     if server and client:
         usage()
-
     if server:
         run_server(group, port, ttl)
-
     if client:
         run_client(group, port, ttl)
 
